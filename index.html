@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Radio Indonesia</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ════════════════════════════════════════════
+   ROOT TOKENS
+════════════════════════════════════════════ */
+:root{
+  --void:   #050508;
+  --d1:     #09090f;
+  --d2:     #0e0e16;
+  --d3:     #13131d;
+  --d4:     #181826;
+  --g1:     rgba(255,255,255,.055);
+  --g2:     rgba(255,255,255,.03);
+  --rim:    rgba(255,255,255,.07);
+  --rim2:   rgba(255,255,255,.035);
+  --a1:     #ff4d1c;
+  --a2:     #ff8c42;
+  --a3:     #ffc46b;
+  --teal:   #06d6a0;
+  --blue:   #4361ee;
+  --pink:   #f72585;
+  --gold:   #ffd166;
+  --green:  #57ff2a;
+  --text:   #eeeef5;
+  --sub:    rgba(238,238,245,.5);
+  --dim:    rgba(238,238,245,.2);
+  --out:    'Outfit', sans-serif;
+  --lora:   'Lora', serif;
+  --mono:   'JetBrains Mono', monospace;
+  --r1: 18px; --r2: 24px; --r3: 32px;
+}
+
+/* ════════════════════════════════════════════
+   RESET + BASE
+════════════════════════════════════════════ */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  min-height:100vh;background:var(--void);color:var(--text);
+  font-family:var(--out);overflow-x:hidden;
+  background-image:
+    radial-gradient(ellipse 80% 60% at 15% 20%, rgba(255,77,28,.09) 0,transparent 55%),
+    radial-gradient(ellipse 60% 50% at 85% 80%, rgba(67,97,238,.08) 0,transparent 50%),
+    radial-gradient(ellipse 40% 30% at 60% 5%,  rgba(6,214,160,.05) 0,transparent 45%);
+}
+::-webkit-scrollbar{width:3px;height:3px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:3px}
+input,textarea,button{font-family:var(--out);outline:none}
+button{cursor:pointer;transition:all .18s;border:none;background:none}
+button:active{transform:scale(.95)}
+a{color:var(--a2);text-decoration:none}
+
+/* Noise overlay */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.025;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* ════════════════════════════════════════════
+   LAYOUT
+════════════════════════════════════════════ */
+#root{position:relative;z-index:1;min-height:100vh;
+  padding:20px 18px 48px;display:flex;flex-direction:column;gap:18px}
+.max-w{max-width:1200px;margin:0 auto;width:100%}
+
+/* ════════════════════════════════════════════
+   HEADER
+════════════════════════════════════════════ */
+.site-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 22px;
+  background:var(--g1);
+  border:1px solid var(--rim2);
+  border-radius:var(--r2);
+  backdrop-filter:blur(24px);
+}
+.brand{display:flex;align-items:center;gap:14px}
+.brand-icon{
+  width:44px;height:44px;border-radius:50%;flex-shrink:0;
+  background:conic-gradient(var(--a1),var(--a2),var(--a3),var(--a1));
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;
+  box-shadow:0 0 24px rgba(255,77,28,.45),inset 0 1px 0 rgba(255,255,255,.15);
+  animation:brandSpin 8s linear infinite;
+}
+.brand-copy h1{font-size:18px;font-weight:800;letter-spacing:1.5px;
+  background:linear-gradient(110deg,var(--a1),var(--a2),var(--a3));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.brand-copy p{font-size:8px;color:var(--dim);letter-spacing:4px;margin-top:2px;font-family:var(--mono)}
+.hdr-pills{display:flex;align-items:center;gap:10px}
+.hdr-pill{
+  display:flex;align-items:center;gap:7px;padding:8px 16px;
+  background:var(--g2);border:1px solid var(--rim2);border-radius:30px;
+  font-size:9px;font-family:var(--mono);letter-spacing:1.5px;color:var(--sub);
+}
+.hdr-pill.live{border-color:rgba(87,255,42,.25);background:rgba(87,255,42,.07);color:var(--green)}
+.hdr-pill.live::before{
+  content:'';width:6px;height:6px;border-radius:50%;
+  background:var(--green);box-shadow:0 0 8px var(--green);animation:blink 1.5s ease-in-out infinite;
+}
+.hdr-num{font-size:16px;font-weight:700;color:var(--a2);display:block;line-height:1}
+.hdr-lbl{font-size:7px;font-family:var(--mono);color:var(--dim);letter-spacing:2px}
+
+/* ════════════════════════════════════════════
+   MAIN GRID
+════════════════════════════════════════════ */
+.main-grid{
+  display:grid;
+  grid-template-columns:320px 1fr 310px;
+  gap:14px;align-items:start;
+}
+@media(max-width:1080px){.main-grid{grid-template-columns:1fr 310px}}
+@media(max-width:720px) {.main-grid{grid-template-columns:1fr}}
+
+/* ════════════════════════════════════════════
+   GLASS CARD BASE
+════════════════════════════════════════════ */
+.gc{
+  background:var(--g1);border:1px solid var(--rim2);
+  border-radius:var(--r2);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  overflow:hidden;
+}
+.gc-hd{
+  padding:12px 18px;border-bottom:1px solid var(--rim2);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.gc-title{font-size:9px;letter-spacing:3px;color:var(--dim);font-family:var(--mono);font-weight:400}
+.gc-badge{font-size:8px;color:var(--dim);font-family:var(--mono)}
+
+/* ════════════════════════════════════════════
+   VINYL PLAYER CARD
+════════════════════════════════════════════ */
+.player-wrap{display:flex;flex-direction:column;gap:12px}
+
+.vinyl-card{
+  background:
+    linear-gradient(160deg, rgba(255,77,28,.06) 0, transparent 40%),
+    var(--g1);
+  border:1px solid var(--rim2);border-radius:var(--r3);
+  backdrop-filter:blur(28px);overflow:hidden;
+  position:relative;
+}
+
+/* Ambient glow behind vinyl */
+.vinyl-ambient{
+  position:absolute;top:60px;left:50%;transform:translateX(-50%);
+  width:220px;height:220px;border-radius:50%;
+  background:radial-gradient(circle, var(--a1) 0, transparent 70%);
+  opacity:.12;filter:blur(30px);
+  transition:opacity .6s, background .6s;
+  pointer-events:none;
+}
+
+/* Stage */
+.vinyl-stage{
+  padding:32px 28px 20px;
+  display:flex;flex-direction:column;align-items:center;
+  position:relative;
+}
+
+/* ── THE VINYL RECORD (SVG-powered) ── */
+.vinyl-container{
+  position:relative;width:220px;height:220px;margin-bottom:22px;
+}
+
+/* The actual spinning SVG */
+#vinyl-svg{
+  width:220px;height:220px;
+  filter:drop-shadow(0 16px 40px rgba(0,0,0,.7));
+  transform-origin:center;
+  /* rotation driven by JS via .style.transform */
+}
+
+/* Tonearm pivot + arm */
+.tonearm-wrap{
+  position:absolute;top:-10px;right:-18px;
+  width:100px;height:110px;
+  transform-origin:18px 18px;
+  transition:transform .9s cubic-bezier(.34,1.56,.64,1);
+}
+.tonearm-wrap.resting{transform:rotate(-22deg)}
+.tonearm-wrap.playing{transform:rotate(-4deg)}
+
+/* Needle glow when playing */
+.needle-glow{
+  position:absolute;bottom:8px;left:8px;
+  width:8px;height:8px;border-radius:50%;
+  background:var(--a1);
+  box-shadow:0 0 0 0 rgba(255,77,28,0);
+  transition:box-shadow .5s;
+}
+.tonearm-wrap.playing .needle-glow{
+  box-shadow:0 0 12px 4px rgba(255,77,28,.7),0 0 24px 8px rgba(255,77,28,.3);
+}
+
+/* Canvas visualizer ring (drawn around vinyl) */
+#viz-ring{
+  position:absolute;inset:-18px;
+  width:calc(100% + 36px);height:calc(100% + 36px);
+  pointer-events:none;border-radius:50%;
+  opacity:0;transition:opacity .5s;
+}
+#viz-ring.active{opacity:1}
+
+/* Station name + meta */
+.st-display{text-align:center;width:100%}
+.st-display .name{
+  font-family:var(--lora);font-size:20px;font-style:italic;
+  color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  margin-bottom:5px;transition:color .4s;
+}
+.st-display .meta{font-size:9px;color:var(--dim);letter-spacing:2px;font-family:var(--mono)}
+
+/* Frequency chip */
+.freq-chip{
+  display:inline-flex;align-items:baseline;gap:5px;
+  margin-top:12px;padding:8px 20px;
+  background:rgba(255,77,28,.1);border:1px solid rgba(255,77,28,.22);
+  border-radius:30px;
+}
+.freq-num{font-size:28px;font-weight:700;color:var(--a1);letter-spacing:2px;line-height:1;font-family:var(--mono)}
+.freq-unit{font-size:10px;color:var(--a2);font-family:var(--mono)}
+.freq-chip.online .freq-num{font-size:14px;letter-spacing:1px}
+
+/* ── Controls zone ── */
+.ctrl-zone{padding:0 20px 22px;display:flex;flex-direction:column;gap:11px}
+
+/* Waveform bar (status) */
+.status-bar{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 16px;
+  background:rgba(0,0,0,.25);
+  border-radius:12px;border:1px solid var(--rim2);
+}
+.s-dot{width:7px;height:7px;border-radius:50%;background:#222;flex-shrink:0;transition:all .3s}
+.s-dot.playing{background:var(--green);box-shadow:0 0 10px var(--green);animation:blink 2s infinite}
+.s-dot.loading{background:var(--gold);box-shadow:0 0 10px var(--gold);animation:blink .4s infinite}
+.s-dot.error  {background:var(--a1);  box-shadow:0 0 10px var(--a1)}
+.s-text{font-size:11px;color:var(--sub);flex:1;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:var(--lora);font-style:italic}
+.s-label{font-size:8px;font-family:var(--mono);letter-spacing:2px;color:var(--dim);flex-shrink:0}
+
+/* Volume */
+.vol-row{display:flex;align-items:center;gap:10px}
+.vol-icon{font-size:14px;filter:grayscale(1);opacity:.5}
+.vol-slider-wrap{flex:1;position:relative;height:36px;display:flex;align-items:center}
+.vol-track{width:100%;height:4px;background:var(--rim);border-radius:2px;position:relative}
+.vol-filled{height:100%;border-radius:2px;
+  background:linear-gradient(90deg,var(--a1),var(--a2));
+  width:80%;transition:width .05s}
+.vol-ball{
+  position:absolute;top:50%;right:0;transform:translate(50%,-50%);
+  width:16px;height:16px;border-radius:50%;
+  background:linear-gradient(135deg,var(--a2),var(--a1));
+  box-shadow:0 0 10px rgba(255,77,28,.5);
+  cursor:grab;transition:box-shadow .2s;
+}
+.vol-ball:active{cursor:grabbing;box-shadow:0 0 20px rgba(255,77,28,.8)}
+input#volume{
+  position:absolute;inset:0;width:100%;opacity:0;cursor:pointer;
+  -webkit-appearance:none;height:100%;
+}
+.vol-pct{font-size:9px;color:var(--dim);font-family:var(--mono);min-width:30px;text-align:right}
+
+/* Play button — hero */
+.play-hero{
+  width:100%;padding:16px;border-radius:16px;
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  font-size:12px;font-weight:700;letter-spacing:2px;color:#fff;
+  background:linear-gradient(135deg,var(--a1) 0%,var(--a2) 60%,var(--a3) 100%);
+  box-shadow:0 6px 28px rgba(255,77,28,.38),inset 0 1px 0 rgba(255,255,255,.15);
+  transition:all .3s;
+  position:relative;overflow:hidden;
+}
+.play-hero::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);
+  transform:translateX(-100%);transition:transform .5s;
+}
+.play-hero:hover::before{transform:translateX(100%)}
+.play-hero:hover{box-shadow:0 8px 36px rgba(255,77,28,.55);transform:translateY(-1px)}
+.play-hero.loading{background:linear-gradient(135deg,#2a1800,#1c1200);box-shadow:none}
+.play-hero.playing{background:linear-gradient(135deg,#1a0800,#100500);box-shadow:none}
+.play-hero .ph-icon{font-size:22px}
+
+/* Scan */
+.scan-btn{
+  width:100%;padding:11px;border-radius:12px;
+  font-size:9px;letter-spacing:2px;color:var(--dim);
+  background:var(--g2);border:1px solid var(--rim2);
+  font-family:var(--mono);
+}
+.scan-btn.on{color:var(--green);border-color:rgba(87,255,42,.3);background:rgba(87,255,42,.06)}
+
+/* Error */
+.err-zone{padding:6px 20px 14px;text-align:center;display:none}
+.err-zone p{font-size:9px;color:var(--a1);font-family:var(--mono);margin-bottom:6px}
+.retry-btn{font-size:9px;color:var(--a2);padding:5px 14px;
+  background:rgba(255,77,28,.1);border:1px solid rgba(255,77,28,.22);
+  border-radius:8px;font-family:var(--mono)}
+
+/* ════════════════════════════════════════════
+   FILTER + SEARCH + STATS (left column extras)
+════════════════════════════════════════════ */
+.filter-card{
+  background:var(--g1);border:1px solid var(--rim2);border-radius:18px;
+  padding:14px 16px;backdrop-filter:blur(20px);
+}
+.fc-lbl{font-size:8px;color:var(--dim);letter-spacing:3px;font-family:var(--mono);margin-bottom:10px}
+.gpills{display:flex;flex-wrap:wrap;gap:5px}
+.gpill{
+  padding:4px 11px;border-radius:8px;font-size:8px;letter-spacing:.5px;
+  border:1px solid var(--rim2);background:transparent;color:var(--dim);font-family:var(--mono);
+}
+.gpill.on{color:var(--a1);border-color:rgba(255,77,28,.4);background:rgba(255,77,28,.1)}
+.gpill:hover:not(.on){color:var(--sub);border-color:var(--rim)}
+
+.search-card{
+  background:var(--g1);border:1px solid var(--rim2);border-radius:14px;
+  display:flex;align-items:center;overflow:hidden;backdrop-filter:blur(20px);
+}
+.s-icon{padding:0 14px;font-size:15px;color:var(--dim);flex-shrink:0}
+#srch{flex:1;background:transparent;border:none;color:var(--text);
+  font-size:12px;padding:13px 0}
+#srch::placeholder{color:var(--dim)}
+#clr-srch{padding:0 14px;font-size:18px;color:var(--dim);display:none;background:none;border:none}
+
+.info-strip{
+  background:var(--g1);border:1px solid var(--rim2);border-radius:14px;
+  padding:12px 16px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
+  backdrop-filter:blur(20px);
+}
+.is-cell{text-align:center}
+.is-v{font-size:18px;font-weight:700;color:var(--a2);display:block}
+.is-l{font-size:7px;color:var(--dim);letter-spacing:2px;font-family:var(--mono);margin-top:2px}
+
+/* ════════════════════════════════════════════
+   STATION LIST
+════════════════════════════════════════════ */
+.slist-card{
+  background:var(--g1);border:1px solid var(--rim2);border-radius:var(--r2);
+  overflow:hidden;backdrop-filter:blur(20px);
+}
+#slist-loading{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:50px 20px;gap:14px}
+.spinner{
+  width:34px;height:34px;border-radius:50%;
+  border:2px solid var(--rim);border-top-color:var(--a1);
+  animation:spinZ 1s linear infinite;
+}
+#slist-loading p{font-size:9px;color:var(--dim);letter-spacing:2px;font-family:var(--mono)}
+#slist{overflow-y:auto;max-height:600px}
+#no-res{text-align:center;padding:40px 20px;color:var(--dim);font-size:11px;display:none}
+
+.srow{
+  padding:11px 18px;border-bottom:1px solid var(--rim2);
+  display:flex;align-items:center;gap:12px;cursor:pointer;
+  border-left:3px solid transparent;transition:all .15s;position:relative;
+}
+.srow::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(255,77,28,.05),transparent);
+  opacity:0;transition:opacity .2s;pointer-events:none;
+}
+.srow:hover::after,.srow.active::after{opacity:1}
+.srow.active{border-left-color:var(--a1)}
+
+/* Mini vinyl in list */
+.mini-disc{
+  width:40px;height:40px;border-radius:50%;flex-shrink:0;
+  background:
+    repeating-radial-gradient(circle at 50%,#111 0,#111 2px,#1d1d1d 2px,#1d1d1d 5px,
+    #0e0e0e 5px,#0e0e0e 7px,#191919 7px,#191919 10px);
+  position:relative;display:flex;align-items:center;justify-content:center;
+  transition:all .3s;
+}
+.mini-disc::after{
+  content:'';width:11px;height:11px;border-radius:50%;
+  background:#0a0a0a;border:1px solid #2a2a2a;
+}
+.srow.active .mini-disc{
+  animation:spinZ 2s linear infinite;
+  box-shadow:0 0 14px rgba(255,77,28,.35);
+}
+.srow.active .mini-disc::before{
+  content:'';position:absolute;inset:0;border-radius:50%;
+  background:conic-gradient(transparent 0%,rgba(255,77,28,.3) 30%,transparent 60%);
+}
+.srow.active.buff .mini-disc{box-shadow:0 0 14px rgba(255,212,0,.35)}
+.srow.active.err  .mini-disc{animation:none}
+
+.s-info{flex:1;min-width:0}
+.s-name{font-size:12px;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:3px;transition:color .2s}
+.srow.active .s-name{color:var(--a1);font-weight:600}
+.s-meta{font-size:8px;color:var(--dim);font-family:var(--mono);letter-spacing:.3px}
+.s-fr{font-size:10px;color:var(--dim);font-family:var(--mono);flex-shrink:0}
+.srow.active .s-fr{color:var(--a2)}
+.cbadge{
+  font-size:7px;padding:1px 5px;border-radius:4px;margin-left:5px;vertical-align:middle;
+  background:rgba(6,214,160,.08);color:rgba(6,214,160,.7);
+  border:1px solid rgba(6,214,160,.12);font-family:var(--mono);
+}
+
+/* ════════════════════════════════════════════
+   CHAT COLUMN
+════════════════════════════════════════════ */
+.chat-col{display:flex;flex-direction:column;gap:11px}
+
+.chat-hdr-card{
+  background:var(--g1);border:1px solid var(--rim2);border-radius:18px;
+  padding:14px 16px;display:flex;justify-content:space-between;align-items:center;
+  backdrop-filter:blur(20px);
+}
+.chc-l h3{font-size:15px;font-weight:700;letter-spacing:.5px;
+  background:linear-gradient(110deg,var(--a1),var(--a2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.chc-l p{font-size:8px;color:var(--dim);margin-top:3px;letter-spacing:1px;font-family:var(--mono)}
+.chc-r{text-align:right}
+.live-badge{display:inline-flex;align-items:center;gap:5px;font-size:8px;
+  color:var(--green);font-family:var(--mono);letter-spacing:1px}
+.live-badge::before{content:'';width:5px;height:5px;border-radius:50%;
+  background:var(--green);box-shadow:0 0 7px var(--green);animation:blink 2s infinite}
+#chat-cnt{font-size:8px;color:var(--dim);font-family:var(--mono);margin-top:3px}
+
+/* Identity */
+.id-card{
+  background:var(--g1);border:1px solid var(--rim2);border-radius:16px;
+  padding:14px 14px;backdrop-filter:blur(20px);
+}
+.id-lbl{font-size:8px;color:var(--dim);letter-spacing:2px;font-family:var(--mono);margin-bottom:10px}
+.id-inputs{display:flex;gap:8px;margin-bottom:10px}
+.id-in{
+  flex:1;background:rgba(0,0,0,.35);border:1px solid var(--rim);border-radius:10px;
+  padding:10px 12px;color:var(--text);font-size:11px;transition:border .2s;
+}
+.id-in:focus{border-color:rgba(255,77,28,.45)}
+.id-in::placeholder{color:var(--dim)}
+#id-city{flex:0 0 96px}
+#btn-join{
+  width:100%;padding:11px;border-radius:10px;border:none;
+  background:linear-gradient(135deg,var(--a1),var(--a2));color:#fff;
+  font-size:9px;letter-spacing:2px;font-weight:700;
+  box-shadow:0 3px 16px rgba(255,77,28,.3);
+}
+
+.user-pill{
+  background:rgba(6,214,160,.06);border:1px solid rgba(6,214,160,.15);
+  border-radius:14px;padding:11px 14px;display:none;
+  align-items:center;justify-content:space-between;
+  backdrop-filter:blur(20px);
+}
+.up-name{font-size:13px;font-weight:600;color:var(--teal)}
+.up-city{font-size:9px;color:rgba(6,214,160,.45);margin-top:2px;font-family:var(--mono)}
+#btn-change{font-size:8px;color:var(--dim);background:var(--g2);
+  border:1px solid var(--rim2);border-radius:6px;padding:4px 10px}
+
+/* Form */
+.form-card{
+  background:var(--g1);border:1px solid var(--rim2);border-radius:16px;
+  padding:14px;backdrop-filter:blur(20px);
+}
+.ttabs{display:flex;gap:5px;margin-bottom:12px}
+.ttab{
+  flex:1;padding:7px 2px;border-radius:8px;font-size:8px;letter-spacing:.5px;
+  border:1px solid var(--rim2);background:transparent;color:var(--dim);font-family:var(--mono);
+}
+.ttab.on{color:var(--a1);border-color:rgba(255,77,28,.4);background:rgba(255,77,28,.09)}
+.ttab:hover:not(.on){color:var(--sub);border-color:var(--rim)}
+
+#req-extra{display:none;flex-direction:column;gap:7px;margin-bottom:11px}
+.req-in{
+  width:100%;background:rgba(0,0,0,.3);border:1px solid rgba(6,214,160,.14);
+  border-radius:9px;padding:9px 12px;color:var(--text);font-size:11px;transition:border .2s;
+}
+.req-in:focus{border-color:rgba(6,214,160,.4)}
+.req-in::placeholder{color:var(--dim)}
+
+#msg-inp{
+  width:100%;background:rgba(0,0,0,.3);border:1px solid var(--rim);border-radius:10px;
+  padding:10px 12px;color:var(--text);font-size:12px;
+  font-family:var(--lora);resize:none;line-height:1.6;
+  display:block;transition:border .2s;margin-bottom:10px;
+}
+#msg-inp:focus{border-color:rgba(255,77,28,.35)}
+#msg-inp::placeholder{color:var(--dim)}
+
+#btn-send{
+  width:100%;padding:12px;border-radius:10px;
+  background:rgba(255,255,255,.04);color:var(--dim);
+  font-size:9px;letter-spacing:2px;font-weight:700;transition:all .3s;
+  border:1px solid var(--rim2);
+}
+#btn-send.ready{
+  background:linear-gradient(135deg,var(--a1),var(--a2));color:#fff;
+  border-color:transparent;box-shadow:0 4px 18px rgba(255,77,28,.3);
+}
+
+/* Messages */
+.msgs-card{
+  background:var(--g1);border:1px solid var(--rim2);border-radius:16px;
+  overflow:hidden;backdrop-filter:blur(20px);
+}
+.msgs-hd{padding:10px 14px;border-bottom:1px solid var(--rim2);
+  display:flex;justify-content:space-between;align-items:center}
+.mhd-t{font-size:8px;color:var(--dim);letter-spacing:3px;font-family:var(--mono)}
+#msgs-total{font-size:8px;color:var(--dim);font-family:var(--mono)}
+
+#msgs{overflow-y:auto;max-height:330px;padding:10px 10px 6px}
+.msgs-empty{text-align:center;padding:28px;color:var(--dim);font-size:11px}
+
+/* Message bubble */
+.msg{
+  border-radius:12px;padding:10px 13px;margin-bottom:7px;
+  background:rgba(255,255,255,.02);position:relative;overflow:hidden;
+  border:1px solid transparent;
+}
+.msg::before{
+  content:'';position:absolute;left:0;top:10%;bottom:10%;width:3px;border-radius:0 2px 2px 0;
+}
+.msg.new-in{animation:floatUp .38s cubic-bezier(.175,.885,.32,1.275)}
+.msg.mine{background:rgba(255,77,28,.05);border-color:rgba(255,77,28,.1)}
+
+.msg.t-salam        {border-color:rgba(255,77,28,.08)}
+.msg.t-salam        ::before{background:linear-gradient(180deg,var(--a1),var(--a2))}
+.msg.t-request      {border-color:rgba(6,214,160,.08)}
+.msg.t-request      ::before{background:var(--teal)}
+.msg.t-announcement {border-color:rgba(255,209,102,.08)}
+.msg.t-announcement ::before{background:var(--gold)}
+.msg.t-sapa         {border-color:rgba(247,37,133,.08)}
+.msg.t-sapa         ::before{background:var(--pink)}
+
+.msg-hd{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;gap:8px}
+.mn{font-size:10px;font-weight:700;flex-shrink:0;letter-spacing:.3px}
+.t-salam        .mn{color:var(--a1)}
+.t-request      .mn{color:var(--teal)}
+.t-announcement .mn{color:var(--gold)}
+.t-sapa         .mn{color:var(--pink)}
+.mm{text-align:right;flex-shrink:0}
+.mt{font-size:8px;color:var(--dim);font-family:var(--mono);display:block}
+.ms{font-size:7px;color:rgba(6,214,160,.4);font-family:var(--mono);margin-top:1px;display:block}
+.mb{font-size:12px;color:rgba(238,238,245,.6);line-height:1.6;font-family:var(--lora)}
+.mx{margin-top:6px;display:flex;flex-direction:column;gap:3px}
+.mp{display:inline-block;padding:3px 9px;border-radius:5px;font-size:10px;font-family:var(--mono)}
+.mp-song{background:rgba(6,214,160,.07);color:var(--teal);border:1px solid rgba(6,214,160,.15)}
+.mp-for {background:rgba(247,37,133,.07);color:var(--pink);border:1px solid rgba(247,37,133,.14)}
+.me-tag{font-size:7px;padding:1px 5px;border-radius:4px;margin-left:4px;vertical-align:middle;
+  background:rgba(255,77,28,.14);color:var(--a1);border:1px solid rgba(255,77,28,.22)}
+
+/* ════════════════════════════════════════════
+   ANIMATIONS
+════════════════════════════════════════════ */
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
+@keyframes spinZ{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes brandSpin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes floatUp{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div id="root">
+<div class="max-w">
+
+  <!-- ══ HEADER ══ -->
+  <header class="site-hdr">
+    <div class="brand">
+      <div class="brand-icon">📻</div>
+      <div class="brand-copy">
+        <h1>RADIO INDONESIA</h1>
+        <p>CREATED BY ROBI TRIDANI</p>
+      </div>
+    </div>
+    <div class="hdr-pills">
+      <div class="hdr-pill">
+        <span><span class="hdr-num" id="hdr-total">—</span><span class="hdr-lbl">STASIUN</span></span>
+      </div>
+      <div class="hdr-pill">
+        <span><span class="hdr-num" id="hdr-listeners">3,142</span><span class="hdr-lbl">ONLINE</span></span>
+      </div>
+      <div class="hdr-pill live">SIARAN LANGSUNG</div>
+    </div>
+  </header>
+
+  <!-- ══ MAIN GRID ══ -->
+  <div class="main-grid">
+
+    <!-- COL 1: PLAYER -->
+    <div class="player-wrap">
+      <div class="vinyl-card">
+        <div class="vinyl-ambient" id="ambient"></div>
+
+        <!-- Vinyl stage -->
+        <div class="vinyl-stage">
+          <div class="vinyl-container">
+
+            <!-- Canvas visualizer ring -->
+            <canvas id="viz-ring" width="256" height="256"></canvas>
+
+            <!-- SVG Vinyl Record -->
+            <svg id="vinyl-svg" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <radialGradient id="vg" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%"   stop-color="#2a2a2a"/>
+                  <stop offset="30%"  stop-color="#111"/>
+                  <stop offset="60%"  stop-color="#1e1e1e"/>
+                  <stop offset="100%" stop-color="#0a0a0a"/>
+                </radialGradient>
+                <radialGradient id="lg" cx="50%" cy="35%" r="60%">
+                  <stop offset="0%"   stop-color="rgba(255,255,255,.08)"/>
+                  <stop offset="100%" stop-color="transparent"/>
+                </radialGradient>
+                <radialGradient id="cg" id="cg" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%"   stop-color="#ff8c42" stop-opacity="1"/>
+                  <stop offset="50%"  stop-color="#ff4d1c" stop-opacity="1"/>
+                  <stop offset="100%" stop-color="#c43000" stop-opacity="1"/>
+                </radialGradient>
+                <!-- Groove pattern -->
+                <pattern id="grooves" x="0" y="0" width="220" height="220" patternUnits="userSpaceOnUse">
+                  <circle cx="110" cy="110" r="105" fill="none" stroke="#1a1a1a" stroke-width=".8" opacity=".6"/>
+                  <circle cx="110" cy="110" r="100" fill="none" stroke="#222" stroke-width=".5" opacity=".5"/>
+                  <circle cx="110" cy="110" r="95"  fill="none" stroke="#1a1a1a" stroke-width=".8" opacity=".6"/>
+                  <circle cx="110" cy="110" r="90"  fill="none" stroke="#222" stroke-width=".5" opacity=".5"/>
+                  <circle cx="110" cy="110" r="85"  fill="none" stroke="#1a1a1a" stroke-width=".8" opacity=".6"/>
+                  <circle cx="110" cy="110" r="80"  fill="none" stroke="#222" stroke-width=".6"/>
+                  <circle cx="110" cy="110" r="75"  fill="none" stroke="#1a1a1a" stroke-width=".8" opacity=".7"/>
+                  <circle cx="110" cy="110" r="70"  fill="none" stroke="#252525" stroke-width=".5"/>
+                  <circle cx="110" cy="110" r="65"  fill="none" stroke="#1a1a1a" stroke-width=".8"/>
+                  <circle cx="110" cy="110" r="60"  fill="none" stroke="#222" stroke-width=".6"/>
+                  <circle cx="110" cy="110" r="55"  fill="none" stroke="#1a1a1a" stroke-width=".8"/>
+                  <circle cx="110" cy="110" r="50"  fill="none" stroke="#222" stroke-width=".5"/>
+                  <circle cx="110" cy="110" r="45"  fill="none" stroke="#1a1a1a" stroke-width=".8"/>
+                  <circle cx="110" cy="110" r="40"  fill="none" stroke="#252525" stroke-width=".6"/>
+                </pattern>
+              </defs>
+
+              <!-- Body -->
+              <circle cx="110" cy="110" r="108" fill="#0a0a0a" stroke="#222" stroke-width="1.5"/>
+              <circle cx="110" cy="110" r="108" fill="url(#vg)"/>
+              <circle cx="110" cy="110" r="108" fill="url(#grooves)"/>
+              <!-- Shine -->
+              <circle cx="110" cy="110" r="108" fill="url(#lg)" opacity=".4"/>
+
+              <!-- Label area -->
+              <circle cx="110" cy="110" r="38" fill="url(#cg)"/>
+              <circle cx="110" cy="110" r="38" fill="url(#lg)" opacity=".3"/>
+              <!-- Label text -->
+              <text x="110" y="103" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" font-weight="500" fill="rgba(255,255,255,.85)" id="lbl-line1">RADIO.ID</text>
+              <text x="110" y="116" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6" fill="rgba(255,255,255,.6)" id="lbl-line2">NUSANTARA</text>
+              <text x="110" y="127" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" font-weight="500" fill="rgba(255,255,255,.9)" id="lbl-freq">LIVE</text>
+
+              <!-- Center hole -->
+              <circle cx="110" cy="110" r="5" fill="#050508" stroke="#333" stroke-width="1"/>
+              <!-- Edge rim -->
+              <circle cx="110" cy="110" r="107" fill="none" stroke="#333" stroke-width=".5"/>
+              <circle cx="110" cy="110" r="106" fill="none" stroke="#1a1a1a" stroke-width=".5"/>
+            </svg>
+
+            <!-- Tonearm -->
+            <div class="tonearm-wrap resting" id="tonearm">
+              <svg viewBox="0 0 100 110" fill="none" xmlns="http://www.w3.org/2000/svg" width="100" height="110">
+                <!-- Pivot -->
+                <circle cx="82" cy="14" r="10" fill="#2a2a2a" stroke="#444" stroke-width="1.5"/>
+                <circle cx="82" cy="14" r="6"  fill="#1a1a1a"/>
+                <circle cx="82" cy="14" r="2.5" fill="#555"/>
+                <!-- Arm -->
+                <path d="M82 24 C78 50 45 80 18 102" stroke="#3a3a3a" stroke-width="4" stroke-linecap="round"/>
+                <path d="M82 24 C78 50 45 80 18 102" stroke="#555" stroke-width="2" stroke-linecap="round" opacity=".4"/>
+                <!-- Head shell -->
+                <ellipse cx="16" cy="103" rx="7" ry="5" fill="#2a2a2a" stroke="#555" stroke-width="1" transform="rotate(-30 16 103)"/>
+                <!-- Needle tip -->
+                <circle cx="12" cy="107" r="3" fill="#ff4d1c" opacity=".85"/>
+              </svg>
+              <div class="needle-glow"></div>
+            </div>
+
+          </div><!-- /vinyl-container -->
+
+          <!-- Station display -->
+          <div class="st-display">
+            <div class="name" id="st-name">Pilih stasiun radio…</div>
+            <div class="meta" id="st-meta">RADIO INDONESIA ONLINE</div>
+            <div class="freq-chip" id="freq-chip">
+              <span class="freq-num" id="freq-num">--.-</span>
+              <span class="freq-unit">FM</span>
+            </div>
+          </div>
+        </div><!-- /vinyl-stage -->
+
+        <!-- Controls -->
+        <div class="ctrl-zone">
+          <!-- Status bar -->
+          <div class="status-bar">
+            <div class="s-dot" id="s-dot"></div>
+            <div class="s-text" id="s-text">Pilih stasiun untuk memulai</div>
+            <div class="s-label" id="s-label">STANDBY</div>
+          </div>
+
+          <!-- Volume -->
+          <div class="vol-row">
+            <span class="vol-icon">🔈</span>
+            <div class="vol-slider-wrap">
+              <div class="vol-track">
+                <div class="vol-filled" id="vfill"></div>
+                <div class="vol-ball" id="vball" style="right:20%"></div>
+              </div>
+              <input type="range" id="volume" min="0" max="100" value="80"/>
+            </div>
+            <span class="vol-icon">🔊</span>
+            <span class="vol-pct" id="vol-pct">80%</span>
+          </div>
+
+          <!-- Play hero -->
+          <button class="play-hero" id="btn-play">
+            <span class="ph-icon">▶</span>
+            <span id="play-lbl">PUTAR SEKARANG</span>
+          </button>
+          <button class="scan-btn" id="btn-scan">⟳ AUTO SCAN STASIUN</button>
+          <div class="err-zone" id="err-zone">
+            <p>⚠ Stream tidak dapat diakses</p>
+            <button class="retry-btn" id="btn-retry">↺ Coba Stasiun Lain</button>
+          </div>
+        </div>
+      </div><!-- /vinyl-card -->
+
+      <!-- Genre filter -->
+      <div class="filter-card">
+        <div class="fc-lbl">FILTER GENRE</div>
+        <div class="gpills" id="gpills"></div>
+      </div>
+
+      <!-- Search -->
+      <div class="search-card">
+        <span class="s-icon">⌕</span>
+        <input type="text" id="srch" placeholder="Cari stasiun, kota, genre…"/>
+        <button id="clr-srch">×</button>
+      </div>
+
+      <!-- Info strip -->
+      <div class="info-strip">
+        <div class="is-cell"><span class="is-v" id="is-total">—</span><div class="is-l">STASIUN</div></div>
+        <div class="is-cell"><span class="is-v" id="is-shown">—</span><div class="is-l">TAMPIL</div></div>
+        <div class="is-cell"><span class="is-v" id="is-msgs">0</span><div class="is-l">PESAN</div></div>
+      </div>
+    </div><!-- /player-wrap -->
+
+    <!-- COL 2: STATION LIST -->
+    <div class="slist-card">
+      <div class="gc-hd">
+        <span class="gc-title">DAFTAR STASIUN LIVE</span>
+        <span class="gc-badge" id="shown-count">memuat…</span>
+      </div>
+      <div id="slist-loading"><div class="spinner"></div><p>MEMUAT STASIUN RADIO…</p></div>
+      <div id="slist"></div>
+      <div id="no-res">Tidak ada stasiun ditemukan</div>
+    </div>
+
+    <!-- COL 3: CHAT -->
+    <div class="chat-col">
+
+      <div class="chat-hdr-card">
+        <div class="chc-l">
+          <h3>📻 LIVE CHAT</h3>
+          <p>SALAM · REQUEST · ATENSI · SAPA</p>
+        </div>
+        <div class="chc-r">
+          <div class="live-badge">LIVE</div>
+          <div id="chat-cnt">0 pesan</div>
+        </div>
+      </div>
+
+      <!-- Identity -->
+      <div class="id-card" id="id-form">
+        <div class="id-lbl">SIAPA NAMA KAMU?</div>
+        <div class="id-inputs">
+          <input class="id-in" id="id-name" placeholder="Nama kamu…"/>
+          <input class="id-in" id="id-city" placeholder="Kota…"/>
+        </div>
+        <button id="btn-join">✔ GABUNG KE SIARAN</button>
+      </div>
+      <div class="user-pill" id="user-pill">
+        <div>
+          <div class="up-name" id="up-name">—</div>
+          <div class="up-city" id="up-city">Pendengar aktif</div>
+        </div>
+        <button id="btn-change">Ganti</button>
+      </div>
+
+      <!-- Form -->
+      <div class="form-card">
+        <div class="ttabs">
+          <button class="ttab on" data-t="salam">💬 Salam</button>
+          <button class="ttab" data-t="request">🎵 Request</button>
+          <button class="ttab" data-t="announcement">📣 Atensi</button>
+          <button class="ttab" data-t="sapa">👋 Sapa</button>
+        </div>
+        <div id="req-extra">
+          <input class="req-in" id="req-song" placeholder="🎵 Judul lagu yang di-request…"/>
+          <input class="req-in" id="req-for"  placeholder="💕 Untuk siapa? (opsional)"/>
+        </div>
+        <textarea id="msg-inp" rows="3" placeholder="Kirim salam buat siapa? Ceritain dari mana kamu dengerin 😊"></textarea>
+        <button id="btn-send">📡 KIRIM KE UDARA</button>
+      </div>
+
+      <!-- Messages -->
+      <div class="msgs-card">
+        <div class="msgs-hd">
+          <span class="mhd-t">PESAN PENDENGAR</span>
+          <span id="msgs-total">0 pesan</span>
+        </div>
+        <div id="msgs">
+          <div class="msgs-empty">Jadilah yang pertama kirim pesan! 📻</div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /main-grid -->
+
+  <footer style="text-align:center;font-size:8px;color:var(--dim);letter-spacing:3px;font-family:var(--mono);padding-top:6px">
+    CREATED BY ROBI TRIDANI · INDRAGIRI HULU
+  </footer>
+
+</div>
+</div><!-- /root -->
+
+<audio id="audio" crossorigin="anonymous" preload="none"></audio>
+
+<script>
+'use strict';
+
+/* ═══════════════════════════
+   STATE
+═══════════════════════════ */
+let myName = localStorage.getItem('rn_name') || '';
+let myCity = localStorage.getItem('rn_city') || '';
+const audio = document.getElementById('audio');
+let allSt=[], filtSt=[], curSt=null, pStatus='idle';
+let activeGenre='Semua', scanning=false, scanTimer=null, scanIdx=0, retries=0;
+let activeType='salam', isSending=false;
+let listeners=3142;
+
+// Vinyl rotation state
+let vinylAngle=0, vinylRAF=null;
+// Canvas viz
+let vizRAF=null, vizBars=new Array(64).fill(0);
+
+const PALETTE=['#ff4d1c','#e91e8c','#ff9800','#f72585','#4361ee','#06d6a0','#ffd166','#ff4d6d','#7209b7','#4cc9f0','#38b000','#ff6b6b','#118ab2','#ef233c','#2dc653'];
+const ICONS={salam:'💬',request:'🎵',announcement:'📣',sapa:'👋'};
+const TYPE_PH={
+  salam:'Kirim salam ke sesama pendengar. Sebut namanya kalau ada yang dituju 😊',
+  request:'Tulis pesan dedikasi untuk request lagumu…',
+  announcement:'Umumkan sesuatu ke semua pendengar Indonesia 📣',
+  sapa:'Sapa pendengar lain yang sedang online sekarang! 👋',
+};
+const $=id=>document.getElementById(id);
+const genId=()=>Math.random().toString(36).substr(2,9);
+const nowStr=()=>{const d=new Date();return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;};
+const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const rand=a=>a[Math.floor(Math.random()*a.length)];
+const clamp=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
+
+/* ═══════════════════════════
+   VINYL SPIN (RAF-based smooth)
+═══════════════════════════ */
+let lastTS=null;
+function spinFrame(ts){
+  if(!lastTS) lastTS=ts;
+  const dt=ts-lastTS; lastTS=ts;
+  // ~33rpm = 0.55 rev/s = 198 deg/s
+  vinylAngle=(vinylAngle+dt*0.198)%360;
+  $('vinyl-svg').style.transform=`rotate(${vinylAngle}deg)`;
+  vinylRAF=requestAnimationFrame(spinFrame);
+}
+function startVinyl(){
+  if(vinylRAF) return;
+  lastTS=null;
+  vinylRAF=requestAnimationFrame(spinFrame);
+  $('tonearm').className='tonearm-wrap playing';
+  $('viz-ring').classList.add('active');
+}
+function stopVinyl(){
+  if(vinylRAF){cancelAnimationFrame(vinylRAF);vinylRAF=null;}
+  $('tonearm').className='tonearm-wrap resting';
+  $('viz-ring').classList.remove('active');
+  $('ambient').style.opacity='.12';
+}
+
+/* ═══════════════════════════
+   CANVAS VISUALIZER RING
+═══════════════════════════ */
+function drawVizRing(){
+  const canvas=$('viz-ring');
+  const ctx=canvas.getContext('2d');
+  const W=256,H=256,cx=128,cy=128;
+  const innerR=122, outerR=148;
+
+  ctx.clearRect(0,0,W,H);
+
+  const N=64;
+  for(let i=0;i<N;i++){
+    // Animate bars
+    const target=pStatus==='playing'?Math.random()*0.85+0.05:0.05;
+    vizBars[i]+=(target-vizBars[i])*0.18;
+    const v=vizBars[i];
+
+    const angle=(i/N)*Math.PI*2 - Math.PI/2;
+    const barH=(outerR-innerR)*v;
+    const x1=cx+Math.cos(angle)*innerR;
+    const y1=cy+Math.sin(angle)*innerR;
+    const x2=cx+Math.cos(angle)*(innerR+barH);
+    const y2=cy+Math.sin(angle)*(innerR+barH);
+
+    // Color gradient based on position
+    const hue=i/N*60+10; // orange to yellow
+    const alpha=clamp(v*1.5,0.1,0.85);
+    ctx.strokeStyle=`hsla(${hue},100%,60%,${alpha})`;
+    ctx.lineWidth=3;
+    ctx.lineCap='round';
+    ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
+  }
+
+  // Outer glow ring
+  if(pStatus==='playing'){
+    const grd=ctx.createRadialGradient(cx,cy,innerR,cx,cy,outerR+10);
+    grd.addColorStop(0,`rgba(255,77,28,0)`);
+    grd.addColorStop(.5,`rgba(255,77,28,0.06)`);
+    grd.addColorStop(1,`rgba(255,77,28,0)`);
+    ctx.fillStyle=grd;
+    ctx.beginPath();ctx.arc(cx,cy,outerR+10,0,Math.PI*2);ctx.fill();
+  }
+
+  vizRAF=requestAnimationFrame(drawVizRing);
+}
+
+/* ═══════════════════════════
+   PLAYER STATUS
+═══════════════════════════ */
+function setStatus(s){
+  pStatus=s;
+  const dot=$('s-dot'),txt=$('s-text'),lbl=$('s-label'),
+        bp=$('btn-play'),plbl=$('play-lbl'),ez=$('err-zone');
+  dot.className='s-dot '+s;
+  lbl.style.color={playing:'var(--green)',loading:'var(--gold)',error:'var(--a1)',idle:'var(--dim)'}[s];
+  lbl.textContent={playing:'ON AIR',loading:'BUFFERING',error:'NO SIGNAL',idle:'STANDBY'}[s];
+
+  if(s==='playing'){
+    txt.textContent='▶  '+(curSt?.name??'');
+    bp.className='play-hero playing';
+    plbl.textContent='SEDANG DIPUTAR — STOP';
+    bp.querySelector('.ph-icon').textContent='⏹';
+    startVinyl();
+    ez.style.display='none';
+    $('ambient').style.opacity='.22';
+    $('ambient').style.background=`radial-gradient(circle, ${curSt?.color||'var(--a1)'} 0, transparent 70%)`;
+  } else if(s==='loading'){
+    txt.textContent='Menghubungkan ke '+(curSt?.name??'…');
+    bp.className='play-hero loading';
+    plbl.textContent='MEMUAT STREAM…';
+    bp.querySelector('.ph-icon').textContent='⏳';
+    stopVinyl();
+    ez.style.display='none';
+    $('ambient').style.opacity='.08';
+  } else if(s==='error'){
+    txt.textContent='Stream gagal — coba stasiun lain';
+    bp.className='play-hero';
+    plbl.textContent='PUTAR SEKARANG';
+    bp.querySelector('.ph-icon').textContent='▶';
+    stopVinyl();
+    ez.style.display='block';
+    $('ambient').style.opacity='.06';
+  } else {
+    txt.textContent=curSt?'Tap PUTAR untuk memulai':'Pilih stasiun radio…';
+    bp.className='play-hero';
+    plbl.textContent='PUTAR SEKARANG';
+    bp.querySelector('.ph-icon').textContent='▶';
+    stopVinyl();
+    ez.style.display='none';
+    $('ambient').style.opacity='.12';
+  }
+
+  // Update displays
+  if(curSt){
+    $('st-name').textContent=curSt.name;
+    $('st-name').style.color=s==='playing'?'var(--text)':'var(--sub)';
+    $('st-meta').textContent=`${curSt.city} · ${curSt.genre} · ${curSt.codec}${curSt.bitrate?' '+curSt.bitrate+'kbps':''}`;
+    const freq=curSt.freq!=='—'&&curSt.freq?curSt.freq:null;
+    if(freq){
+      $('freq-num').textContent=freq;
+      $('freq-num').style.fontSize='28px';
+      $('freq-chip').classList.remove('online');
+    } else {
+      $('freq-num').textContent='ONLINE';
+      $('freq-chip').classList.add('online');
+    }
+    // Update vinyl label
+    $('lbl-line1').textContent=(curSt.name||'').toUpperCase().slice(0,10);
+    $('lbl-line2').textContent=(curSt.city||'').toUpperCase().slice(0,12);
+    $('lbl-freq').textContent=freq?freq+' FM':'LIVE';
+    // Accent color
+    document.documentElement.style.setProperty('--a1',curSt.color);
+    // Ambient color
+    $('ambient').style.background=`radial-gradient(circle, ${curSt.color} 0, transparent 70%)`;
+  }
+  renderSlist();
+}
+
+function playStation(s){
+  stopScan();curSt=s;retries=0;
+  setStatus('loading');
+  audio.src=s.stream;audio.load();
+  audio.play().catch(()=>setStatus('error'));
+  fetch(`https://de1.api.radio-browser.info/json/url/${s.id}`,{headers:{'User-Agent':'RadioIndonesia/1.0'}}).catch(()=>{});
+}
+function stopStation(){stopScan();audio.pause();audio.src='';setStatus('idle');}
+
+audio.addEventListener('playing',()=>setStatus('playing'));
+audio.addEventListener('waiting',()=>{if(pStatus!=='idle')setStatus('loading');});
+audio.addEventListener('stalled',()=>{if(pStatus!=='idle')setStatus('loading');});
+audio.addEventListener('error',  ()=>{setStatus('error');if(retries<2){retries++;setTimeout(()=>{audio.load();audio.play().catch(()=>{});},3000);}});
+
+// Volume
+$('volume').addEventListener('input',function(){
+  const v=+this.value;
+  audio.volume=v/100;
+  $('vol-pct').textContent=v+'%';
+  $('vfill').style.width=v+'%';
+  $('vball').style.right=(100-v)+'%';
+});
+
+$('btn-play').onclick=()=>{
+  if(pStatus==='playing'||pStatus==='loading')stopStation();
+  else if(curSt)playStation(curSt);
+  else if(filtSt.length)playStation(filtSt[0]);
+};
+$('btn-scan').onclick=()=>scanning?stopScan():startScan();
+$('btn-retry').onclick=()=>curSt&&playStation(curSt);
+
+// Scan
+function startScan(){
+  if(!filtSt.length)return;
+  audio.pause();audio.src='';setStatus('idle');
+  scanning=true;scanIdx=0;
+  $('btn-scan').textContent='■ STOP SCAN';$('btn-scan').classList.add('on');
+  $('st-name').textContent='SCANNING…';
+  scanStep();
+}
+function scanStep(){
+  if(!scanning||scanIdx>=filtSt.length){stopScan();return;}
+  const s=filtSt[scanIdx];
+  $('freq-num').textContent=s.freq!=='—'?s.freq:'--.-';
+  $('st-name').textContent=s.name;scanIdx++;
+  scanTimer=setTimeout(()=>{if(scanning){stopScan();playStation(s);}},400);
+  if(scanning)setTimeout(scanStep,65);
+}
+function stopScan(){
+  if(scanTimer){clearTimeout(scanTimer);scanTimer=null;}
+  scanning=false;
+  $('btn-scan').textContent='⟳ AUTO SCAN STASIUN';$('btn-scan').classList.remove('on');
+}
+
+/* ═══════════════════════════
+   STATIONS
+═══════════════════════════ */
+async function loadStations(){
+  try{
+    const res=await fetch('https://de1.api.radio-browser.info/json/stations/search?countrycode=ID&hidebroken=true&order=votes&reverse=true&limit=300',
+      {headers:{'User-Agent':'RadioIndonesia/1.0'}});
+    if(!res.ok)throw 0;
+    const data=await res.json();
+    allSt=data.filter(s=>s.url_resolved?.trim()).map((s,i)=>({
+      id:s.stationuuid,name:s.name.trim(),freq:s.frequency||'—',
+      city:s.state||s.name,genre:s.tags?s.tags.split(',')[0].trim():'Radio',
+      tags:s.tags?s.tags.split(',').map(t=>t.trim()).filter(Boolean):[],
+      color:PALETTE[i%PALETTE.length],stream:s.url_resolved,codec:s.codec||'MP3',bitrate:s.bitrate||0,
+    }));
+    $('slist-loading').style.display='none';
+    $('hdr-total').textContent=allSt.length;
+    $('is-total').textContent=allSt.length;
+    buildGenrePills();applyFilter();
+  }catch{
+    $('slist-loading').innerHTML=`<p style="color:var(--a1);font-size:10px;text-align:center;font-family:var(--mono)">
+      ⚠ Gagal memuat.<br><br>
+      <button onclick="loadStations()" style="margin-top:10px;padding:8px 18px;border-radius:8px;border:1px solid rgba(255,77,28,.3);background:rgba(255,77,28,.1);color:var(--a1);font-size:9px;cursor:pointer">↺ Coba Lagi</button></p>`;
+  }
+}
+
+function buildGenrePills(){
+  const tc={};
+  allSt.forEach(s=>s.tags.forEach(t=>{if(t&&t.length>1)tc[t]=(tc[t]||0)+1;}));
+  const tops=['Semua',...Object.entries(tc).sort((a,b)=>b[1]-a[1]).slice(0,14).map(e=>e[0])];
+  const wrap=$('gpills');
+  wrap.innerHTML=tops.map(t=>`<button class="gpill${t===activeGenre?' on':''}" data-g="${t}">${t}</button>`).join('');
+  wrap.querySelectorAll('.gpill').forEach(p=>{
+    p.onclick=()=>{activeGenre=p.dataset.g;wrap.querySelectorAll('.gpill').forEach(x=>x.classList.remove('on'));p.classList.add('on');applyFilter();};
+  });
+}
+
+function applyFilter(){
+  const q=$('srch').value.toLowerCase().trim();
+  filtSt=allSt.filter(s=>{
+    const gOk=activeGenre==='Semua'||s.tags.includes(activeGenre)||s.genre.toLowerCase().includes(activeGenre.toLowerCase());
+    const qOk=!q||s.name.toLowerCase().includes(q)||s.city.toLowerCase().includes(q)||s.genre.toLowerCase().includes(q);
+    return gOk&&qOk;
+  });
+  $('shown-count').textContent=filtSt.length+' stasiun';
+  $('is-shown').textContent=filtSt.length;
+  renderSlist();
+}
+
+function renderSlist(){
+  const list=$('slist'),noRes=$('no-res');
+  if(!filtSt.length){list.innerHTML='';noRes.style.display='block';return;}
+  noRes.style.display='none';
+  list.innerHTML=filtSt.map(s=>{
+    const a=curSt?.id===s.id;
+    const sc=a?(pStatus==='loading'?' buff':pStatus==='error'?' err':''):'';
+    return `<div class="srow${a?' active':''}${sc}" data-id="${s.id}">
+      <div class="mini-disc"></div>
+      <div class="s-info">
+        <div class="s-name">${esc(s.name)}<span class="cbadge">${s.codec}</span></div>
+        <div class="s-meta">${esc(s.city)}${s.genre?' · '+esc(s.genre):''}${s.bitrate?` · ${s.bitrate}kbps`:''}</div>
+      </div>
+      <div class="s-fr">${s.freq!=='—'?s.freq+' FM':''}</div>
+    </div>`;
+  }).join('');
+  list.querySelectorAll('.srow').forEach(r=>{
+    r.onclick=()=>{const s=allSt.find(x=>x.id===r.dataset.id);if(s)playStation(s);};
+  });
+}
+
+$('srch').addEventListener('input',function(){$('clr-srch').style.display=this.value?'block':'none';applyFilter();});
+$('clr-srch').onclick=()=>{$('srch').value='';$('clr-srch').style.display='none';applyFilter();};
+
+/* ═══════════════════════════
+   IDENTITY
+═══════════════════════════ */
+function applyIdentity(){
+  if(myName){
+    $('id-form').style.display='none';$('user-pill').style.display='flex';
+    $('up-name').textContent='👤 '+myName;
+    $('up-city').textContent=myCity?'📍 '+myCity:'Pendengar aktif';
+  }else{
+    $('id-form').style.display='block';$('user-pill').style.display='none';
+  }
+  checkSend();
+}
+$('btn-join').onclick=()=>{
+  const n=$('id-name').value.trim(),c=$('id-city').value.trim();
+  if(!n){$('id-name').focus();return;}
+  myName=n;myCity=c;localStorage.setItem('rn_name',n);localStorage.setItem('rn_city',c);
+  applyIdentity();
+};
+$('id-name').addEventListener('keydown',e=>{if(e.key==='Enter')$('btn-join').click();});
+$('btn-change').onclick=()=>{
+  myName='';myCity='';
+  localStorage.removeItem('rn_name');localStorage.removeItem('rn_city');
+  $('id-name').value='';$('id-city').value='';
+  applyIdentity();
+};
+
+/* ═══════════════════════════
+   CHAT
+═══════════════════════════ */
+document.querySelectorAll('.ttab').forEach(p=>{
+  p.onclick=()=>{
+    activeType=p.dataset.t;
+    document.querySelectorAll('.ttab').forEach(x=>x.classList.remove('on'));
+    p.classList.add('on');
+    $('msg-inp').placeholder=TYPE_PH[activeType];
+    $('req-extra').style.display=activeType==='request'?'flex':'none';
+    checkSend();
+  };
+});
+function checkSend(){
+  const ok=myName&&$('msg-inp').value.trim()&&!isSending;
+  $('btn-send').classList.toggle('ready',!!ok);
+}
+$('msg-inp').addEventListener('input',checkSend);
+$('msg-inp').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();doSend();}});
+$('btn-send').onclick=doSend;
+
+function doSend(){
+  const msg=$('msg-inp').value.trim();
+  const song=$('req-song').value.trim();
+  const forW=$('req-for').value.trim();
+  if(!msg||!myName||isSending)return;
+  isSending=true;checkSend();
+  addMsg({id:genId(),name:myName,city:myCity,type:activeType,message:msg,
+    song:activeType==='request'?(song||null):null,
+    for_whom:activeType==='request'?(forW||null):null,
+    station:curSt?.name||null,time:nowStr()},true,true);
+  $('msg-inp').value='';$('req-song').value='';$('req-for').value='';
+  const replies=['Halo '+myName+'! Salam balik 👋',
+    'Asiik '+myName+' dari '+(myCity||'sana')+' juga dengerin! 🎵',
+    myName+' request bagus banget! 🔊',
+    'Salam kenal '+myName+'! Dengerin bareng yuk 📻'];
+  const fn=['Rina','Agus','Dewi','Bayu','Siska','Reza','Nita','Citra'];
+  const fc=['Jakarta','Bandung','Surabaya','Medan','Jogja','Makassar','Denpasar'];
+  setTimeout(()=>{
+    addMsg({id:genId(),name:rand(fn),city:rand(fc),type:'sapa',message:rand(replies),time:nowStr()},false,true);
+    isSending=false;checkSend();
+  },1600+Math.random()*1800);
+}
+
+function addMsg(m,isMe,anim){
+  const wrap=$('msgs');
+  document.querySelector('.msgs-empty')?.remove();
+  if(document.querySelector(`.msg[data-id="${m.id}"]`))return;
+  const t=m.time||nowStr(),city=m.city?` — ${esc(m.city)}`:'';
+  const me=isMe?`<span class="me-tag">KAMU</span>`:'';
+  const st=m.station?`<span class="ms">📻 ${esc(m.station)}</span>`:'';
+  const sg=m.song?`<div><span class="mp mp-song">🎵 ${esc(m.song)}</span></div>`:'';
+  const fw=m.for_whom?`<div><span class="mp mp-for">💕 ${esc(m.for_whom)}</span></div>`:'';
+  const el=document.createElement('div');
+  el.className=`msg t-${m.type}${isMe?' mine':''}${anim?' new-in':''}`;
+  el.dataset.id=m.id;
+  el.innerHTML=`
+    <div class="msg-hd">
+      <span class="mn">${ICONS[m.type]||'💬'} ${esc(m.name)}${city}${me}</span>
+      <span class="mm"><span class="mt">${t}</span>${st}</span>
+    </div>
+    <div class="mb">${esc(m.message)}</div>
+    ${(sg||fw)?`<div class="mx">${sg}${fw}</div>`:''}`;
+  wrap.insertBefore(el,wrap.firstChild);
+  while(wrap.querySelectorAll('.msg').length>80)wrap.lastChild.remove();
+  const n=wrap.querySelectorAll('.msg').length;
+  $('msgs-total').textContent=n+' pesan';
+  $('chat-cnt').textContent=n+' pesan';
+  $('is-msgs').textContent=n;
+}
+
+/* Simulated incoming */
+const FN=['Rina','Agus','Fitri','Doni','Leni','Wawan','Nita','Reza','Citra','Siska','Hendra','Bayu','Ayu','Joko','Putri'];
+const FC=['Jakarta','Bandung','Surabaya','Medan','Makassar','Pekanbaru','Jogja','Denpasar','Pontianak','Manado','Semarang','Malang','Padang','Batam'];
+const FS=['Salam dari {c}! Lagi dengerin malam ini 🌙','Halo semua dari {c}! 👋','Dari {c}, cuaca adem banget cocok dengerin radio 🌃','Salam kenal dari {c}!'];
+const FR=['Request lagu slow rock dong! 💕','Minta lagu galau kak 😢','Bisa request Bukan Cinta Biasa? ❤️','Ada lagu nostalgia 90an gak?'];
+const FSP=['Ada yang dari {c} juga? 👋','Siapa yang masih melek? 😄','Lagi dengerin stasiun apa? 📻','Ada yang nyetir sambil dengerin? Hati-hati ya! 🚗'];
+const FSONG=['Separuh Nafasku','Dengan Caraku','Cinta Luar Biasa','Hati Yang Kau Sakiti','Hingga Akhir Waktu'];
+
+const SEED=[
+  {id:'s4',name:'Pak Hendra',city:'Rumbai',type:'salam',message:'Salam dari Rumbai buat semua! Tetap semangat 💪',time:'21:25'},
+  {id:'s3',name:'Dewi',city:'Bandung',type:'request',message:'Minta lagu malam ini dong 🥺',song:'Separuh Nafasku',for_whom:'si dia ❤️',time:'21:28'},
+  {id:'s2',name:'Studio',city:'',type:'announcement',message:'🎙️ Selamat malam! Kirim salam, request, atau sapa pendengar lain ya!',time:'21:30'},
+  {id:'s1',name:'Budi',city:'Pekanbaru',type:'salam',message:'Salam buat semua! Khusus buat Sari di Panam, kangen deh 😄',time:'21:34'},
+];
+SEED.forEach(m=>addMsg(m,false,false));
+
+setInterval(()=>{
+  if(Math.random()>.5){
+    const n=rand(FN),c=rand(FC),t=rand(['salam','salam','request','sapa']);
+    let msg,song,forW;
+    if(t==='salam')        msg=rand(FS).replace('{c}',c);
+    else if(t==='request'){msg=rand(FR);song=rand(FSONG);forW=Math.random()>.5?'seseorang spesial ❤️':null;}
+    else                   msg=rand(FSP).replace('{c}',c);
+    addMsg({id:genId(),name:n,city:c,type:t,message:msg,song,for_whom:forW,time:nowStr()},false,true);
+    listeners+=Math.floor(Math.random()*3)-1;
+    $('hdr-listeners').textContent=Math.max(0,listeners).toLocaleString();
+  }
+},5200);
+setInterval(()=>{
+  listeners+=Math.floor(Math.random()*6)-2;
+  $('hdr-listeners').textContent=Math.max(0,listeners).toLocaleString();
+},9000);
+
+/* ═══════════════════════════
+   BOOT
+═══════════════════════════ */
+applyIdentity();
+loadStations();
+drawVizRing(); // Start canvas loop
+</script>
+</body>
+</html>
